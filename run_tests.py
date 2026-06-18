@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from config import DEVICE, THRESHOLDS, LOG_ERROR_KEYWORDS
 import sys
 from tests.test_reboot import reboot_tests
+from tests.test_performance import performance_tests
 load_dotenv()
 
 
@@ -139,13 +140,16 @@ def main():
         return
 
     all_results = []
-
+    
     # run each test group
     print("  [ SSH Tests ]")
     all_results += ssh_tests(client, Result, run)
 
     print("\n  [ Network Tests ]")
     all_results += network_tests(client, Result, run)
+
+    print("\n  [ Performance Tests ]")
+    all_results += performance_tests(client, Result, run)
 
     # check if user passed --reboot flag
     run_reboot = "--reboot" in sys.argv
